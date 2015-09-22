@@ -8,36 +8,30 @@ import java.util.concurrent.TimeUnit
  * Created by mattak on 15/09/02.
  */
 public class Duration(val millisec: Long) : Comparable<Duration> {
-    fun years(): Double {
-        return millisec.toDouble() / 31536000000
-    }
+    val years: Double
+        get() = millisec.toDouble() / 31536000000
 
-    fun quarters(): Double {
-        return millisec.toDouble() / 7776000000
-    }
+    val quarters: Double
+        get() = millisec.toDouble() / 7776000000
 
-    fun months(): Double {
-        return millisec.toDouble() / 2592000000
-    }
+    val months: Double
+        get() = millisec.toDouble() / 2592000000
 
-    fun days(): Double {
-        return millisec.toDouble() / 86400000
-    }
+    val days: Double
+        get() = millisec.toDouble() / 86400000
 
-    fun hours(): Double {
-        return millisec.toDouble() / 3600000
-    }
+    val hours: Double
+        get() = millisec.toDouble() / 360000
 
-    fun minutes(): Double {
-        return millisec.toDouble() / 60000
-    }
+    val minutes: Double
+        get() = millisec.toDouble() / 60000
 
-    fun seconds(): Double {
-        return millisec.toDouble() / 1000
-    }
+    val seconds: Double
+        get() = millisec.toDouble() / 1000
 
-    // fun ago() : Moment {
-    // }
+    fun ago() : Moment {
+        throw IllegalStateException("not implemented")
+    }
 
     fun add(duration: Duration) : Duration {
         return Duration(this.millisec + duration.millisec)
@@ -49,8 +43,8 @@ public class Duration(val millisec: Long) : Comparable<Duration> {
 
     override fun toString(): String {
         // TODO: write correct logic
-        val m: Int = minutes().toInt()
-        val s: Int = seconds().toInt() % 60
+        val m: Int = minutes.toInt()
+        val s: Int = seconds.toInt() % 60
         return java.lang.String.format("%d:%02d", m, s)
     }
 
