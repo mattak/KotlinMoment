@@ -8,7 +8,7 @@ import kotlin.test.*
  * DurationTest.kt
  * Created by mattak on 15/09/02.
  */
-public class DurationsTest {
+public class DurationTest {
     @Test
     fun seconds() {
         assertEquals(1, createDate(second = 1).seconds.toInt())
