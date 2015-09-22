@@ -1,5 +1,7 @@
 package me.mattak.moment
 
+import me.mattak.moment
+import java.text.SimpleDateFormat
 import java.util.*
 
 /**
@@ -32,18 +34,154 @@ public class Moment(
     val millisecond: Int
         get() = getCalendarNumber(Calendar.MILLISECOND)
 
-    private fun getCalendarNumber(type: Int): Int {
-        val cal = Calendar.getInstance(timeZone, locale)
-        cal.setTime(date)
-        return cal.get(type)
+    val weekday: Int
+        get() = getCalendarNumber(Calendar.DAY_OF_WEEK)
+
+    val weekdayName: String
+        get() = getFormatString("EEEE")
+
+    val weekdayOrdinal: Int
+        get() = getCalendarNumber(Calendar.DAY_OF_WEEK)
+
+    val weekOfYear: Int
+        get() = getCalendarNumber(Calendar.WEEK_OF_YEAR)
+
+    val quarter: Int
+        get() = getCalendarNumber(Calendar.MONTH) / 3 + 1
+
+    val epoch: Long
+        get() = getCalendar().timeInMillis / 1000
+
+    fun get(unit: TimeUnit): Int {
+        when (unit) {
+            TimeUnit.MILLISECONDS -> return millisecond
+            TimeUnit.SECONDS -> return second
+            TimeUnit.MINUTES -> return minute
+            TimeUnit.HOURS -> return hour
+            TimeUnit.DAYS -> return day
+            TimeUnit.MONTHS -> return month
+            TimeUnit.QUARTERS -> return quarter
+            TimeUnit.YEARS -> return year
+        }
+    }
+
+    fun format(dateFormat: String = "yyyy-MM-dd HH:mm:SS ZZZZ"): String {
+        return getFormatString(dateFormat)
+    }
+
+    fun add(value: Long, unit: TimeUnit): Moment {
+        val millis = convertMillis(value, unit)
+        val calendar = getCalendar()
+        calendar.timeInMillis = calendar.timeInMillis + millis
+        val newDate = calendar.time
+        return Moment(newDate)
+    }
+
+    fun add(value: Duration): Moment {
+        return add(value.millisec, TimeUnit.MILLISECONDS)
+    }
+
+    fun subtract(value: Long, unit: TimeUnit): Moment {
+        return add(-value, unit)
+    }
+
+    fun subtract(duration: Duration): Moment {
+        return add(-duration.millisec, TimeUnit.MILLISECONDS)
+    }
+
+    fun isCloseTo(moment: Moment, precision: Long): Boolean {
+        val delta = intervalSince(moment)
+        return Math.abs(delta.millisec) < precision
+    }
+
+    fun startOf(unit: TimeUnit): Moment {
+        val calendar = getCalendar()
+
+        if (unit.order == TimeUnit.MILLISECONDS.order) {
+            return this
+        }
+        if (unit.order <= TimeUnit.YEARS.order) {
+            calendar.set(1, Calendar.MONTH)
+        }
+        if (unit.order <= TimeUnit.QUARTERS.order) {
+            val month = calendar.get(Calendar.MONTH)
+            val startMonth = (month / 3) * 3
+            calendar.set(startMonth, Calendar.MONTH)
+        }
+        if (unit.order <= TimeUnit.MONTHS.order) {
+            calendar.set(1, Calendar.DAY_OF_MONTH)
+        }
+        if (unit.order <= TimeUnit.DAYS.order) {
+            calendar.set(0, Calendar.HOUR)
+        }
+        if (unit.order <= TimeUnit.HOURS.order) {
+            calendar.set(0, Calendar.MINUTE)
+        }
+        if (unit.order <= TimeUnit.MINUTES.order) {
+            calendar.set(0, Calendar.SECOND)
+        }
+        if (unit.order <= TimeUnit.SECONDS.order) {
+            calendar.set(0, Calendar.MILLISECOND)
+        }
+
+        return Moment(calendar.time)
+    }
+
+    fun endOf(unit: TimeUnit): Moment {
+        return startOf(unit).add(1, unit).subtract(1.milliseconds)
+    }
+
+    fun intervalSince(moment: Moment): Duration {
+        val millisec: Long = (date.getTime() - moment.date.getTime())
+        return Duration(millisec)
+    }
+
+    override fun equals(other: Any?): Boolean {
+        if (other is Moment) {
+            return date.equals(other.date)
+        }
+
+        return false
     }
 
     override fun compareTo(other: Moment): Int {
         return this.date.compareTo(other.date)
     }
 
-    fun intervalSince(moment: Moment): Duration {
-        val millisec: Long = (date.getTime() - moment.date.getTime())
-        return Duration(millisec)
+    override fun toString(): String {
+        return format()
+    }
+
+    private fun getCalendar(): Calendar {
+        val cal = Calendar.getInstance(timeZone, locale)
+        cal.setTime(date)
+        return cal
+    }
+
+    private fun getDateFormat(dateFormat: String): SimpleDateFormat {
+        val format = SimpleDateFormat(dateFormat, locale)
+        format.timeZone = timeZone
+        return format
+    }
+
+    private fun getCalendarNumber(type: Int): Int {
+        return getCalendar().get(type)
+    }
+
+    private fun getFormatString(dateFormat: String): String {
+        return getDateFormat(dateFormat).format(date)
+    }
+
+    private fun convertMillis(value: Long, unit: TimeUnit): Long {
+        when (unit) {
+            TimeUnit.MILLISECONDS -> return value
+            TimeUnit.SECONDS -> return value * 1000
+            TimeUnit.MINUTES -> return value * 60000
+            TimeUnit.HOURS -> return value * 3600000
+            TimeUnit.DAYS -> return value * 86400000
+            TimeUnit.MONTHS -> return value * 2592000000
+            TimeUnit.QUARTERS -> return value * 31536000000
+            TimeUnit.YEARS -> return value * 31536000000
+        }
     }
 }
