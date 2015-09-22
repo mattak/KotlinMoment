@@ -71,6 +71,56 @@ public class DurationsTest {
         assertEquals(2, createDate(month = 24).years.toInt())
     }
 
+    @Test
+    fun ago() {
+        // TODO: write
+    }
+
+    @Test
+    fun add() {
+        val d1 = Duration(1)
+        val d2 = Duration(2)
+        val d3 = Duration(-3)
+        assertEquals(3.toLong(), d1.add(d2).millisec)
+        assertEquals(-2.toLong(), d1.add(d3).millisec)
+    }
+
+    @Test
+    fun subtract() {
+        val d1 = Duration(1)
+        val d2 = Duration(2)
+        val d3 = Duration(-3)
+        assertEquals(-1.toLong(), d1.subtract(d2).millisec)
+        assertEquals(4.toLong(), d1.subtract(d3).millisec)
+    }
+
+    @Test
+    fun equals() {
+        val d1 = Duration(1)
+        val d2 = Duration(1)
+        val d3 = Duration(2)
+        assertTrue(d1.equals(d1))
+        assertTrue(d1.equals(d2))
+        assertFalse(d1.equals(d3))
+        assertFalse(d1.equals(null))
+        assertFalse(d1.equals("something other object"))
+    }
+
+    @Test
+    fun _toString() {
+        // TODO: write
+    }
+
+    @Test
+    fun compareTo() {
+        val d1 = Duration(1)
+        val d2 = Duration(-100)
+        val d3 = Duration(10000)
+        assertTrue(d1.compareTo(d1) == 0)
+        assertTrue(d1.compareTo(d2) > 0)
+        assertTrue(d1.compareTo(d3) < 0)
+    }
+
     private fun createDate(
             year: Int = 1970,
             month: Int = 0,

@@ -1,8 +1,5 @@
 package me.mattak.moment
 
-import java.util.*
-import java.util.concurrent.TimeUnit
-
 /**
  * Duration class is interval of milliseconds. The precision is very rough. (especially month and years)
  * Created by mattak on 15/09/02.
@@ -29,16 +26,24 @@ public class Duration(val millisec: Long) : Comparable<Duration> {
     val seconds: Double
         get() = millisec.toDouble() / 1000
 
-    fun ago() : Moment {
+    fun ago(): Moment {
         throw IllegalStateException("not implemented")
     }
 
-    fun add(duration: Duration) : Duration {
+    fun add(duration: Duration): Duration {
         return Duration(this.millisec + duration.millisec)
     }
 
     fun subtract(duration: Duration): Duration {
         return Duration(this.millisec - duration.millisec)
+    }
+
+    override fun equals(other: Any?): Boolean {
+        if (other != null && other is Duration) {
+            return this.millisec == other.millisec
+        }
+
+        return false
     }
 
     override fun toString(): String {
@@ -51,11 +56,9 @@ public class Duration(val millisec: Long) : Comparable<Duration> {
     override fun compareTo(other: Duration): Int {
         if (this.millisec > other.millisec) {
             return 1
-        }
-        else if (this.millisec < other.millisec){
+        } else if (this.millisec < other.millisec) {
             return -1
-        }
-        else {
+        } else {
             return 0
         }
     }
