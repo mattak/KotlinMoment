@@ -4,7 +4,7 @@ import java.util.*
 import java.util.concurrent.TimeUnit
 
 /**
- * Duration class
+ * Duration class is interval of milliseconds. The precision is very rough. (especially month and years)
  * Created by mattak on 15/09/02.
  */
 public class Duration(val millisec: Long) : Comparable<Duration> {
@@ -21,7 +21,7 @@ public class Duration(val millisec: Long) : Comparable<Duration> {
         get() = millisec.toDouble() / 86400000
 
     val hours: Double
-        get() = millisec.toDouble() / 360000
+        get() = millisec.toDouble() / 3600000
 
     val minutes: Double
         get() = millisec.toDouble() / 60000

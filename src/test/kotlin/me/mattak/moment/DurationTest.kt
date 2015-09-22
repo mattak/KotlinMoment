@@ -1,6 +1,6 @@
 package me.mattak.moment
 
-import org.junit
+import org.junit.Test
 import java.util.*
 import kotlin.test.*
 
@@ -9,13 +9,66 @@ import kotlin.test.*
  * Created by mattak on 15/09/02.
  */
 public class DurationsTest {
-    junit.Test
-    fun second() {
-        val calendar = Calendar.getInstance()
+    @Test
+    fun seconds() {
         assertEquals(1, createDate(second = 1).seconds.toInt())
         assertEquals(59, createDate(second = 59).seconds.toInt())
         assertEquals(60, createDate(second = 60).seconds.toInt())
         assertEquals(120, createDate(second = 120).seconds.toInt())
+    }
+
+    @Test
+    fun minutes() {
+        assertEquals(1, createDate(minute = 1).minutes.toInt())
+        assertEquals(0, createDate(second = 59).minutes.toInt())
+        assertEquals(1, createDate(second = 60).minutes.toInt())
+        assertEquals(1, createDate(second = 119).minutes.toInt())
+        assertEquals(2, createDate(second = 120).minutes.toInt())
+    }
+
+    @Test
+    fun hours() {
+        assertEquals(1, createDate(hour = 1).hours.toInt())
+        assertEquals(0, createDate(minute = 59).hours.toInt())
+        assertEquals(1, createDate(minute = 60).hours.toInt())
+        assertEquals(1, createDate(minute = 119).hours.toInt())
+        assertEquals(2, createDate(minute = 120).hours.toInt())
+    }
+
+    @Test
+    fun days() {
+        assertEquals(1, createDate(day = 2).days.toInt())
+        assertEquals(0, createDate(hour = 23).days.toInt())
+        assertEquals(1, createDate(hour = 24).days.toInt())
+        assertEquals(1, createDate(hour = 47).days.toInt())
+        assertEquals(2, createDate(hour = 48).days.toInt())
+    }
+
+    @Test
+    fun months() {
+        assertEquals(1, createDate(month = 1).months.toInt())
+        assertEquals(0, createDate(day = 30).months.toInt()) // calendar day begin from 1, but calculations is from 30 days.
+        assertEquals(1, createDate(day = 31).months.toInt())
+        assertEquals(1, createDate(day = 60).months.toInt())
+        assertEquals(2, createDate(day = 61).months.toInt())
+    }
+
+    @Test
+    fun quarters() {
+        assertEquals(1, createDate(month = 3).quarters.toInt())
+        assertEquals(0, createDate(month = 2).quarters.toInt())
+        assertEquals(1, createDate(month = 3).quarters.toInt())
+        assertEquals(1, createDate(month = 5).quarters.toInt())
+        assertEquals(2, createDate(month = 6).quarters.toInt())
+    }
+
+    @Test
+    fun years() {
+        assertEquals(1, createDate(year = 1971).years.toInt())
+        assertEquals(0, createDate(month = 11).years.toInt())
+        assertEquals(1, createDate(month = 12).years.toInt())
+        assertEquals(1, createDate(month = 23).years.toInt())
+        assertEquals(2, createDate(month = 24).years.toInt())
     }
 
     private fun createDate(
