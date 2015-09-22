@@ -1,12 +1,12 @@
 buildscript {
-    ext.kotlinVersion = '0.13.1513'
+    ext.kotlin_version = '0.13.1513'
 
     repositories {
         mavenCentral()
     }
 
     dependencies {
-        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlinVersion"
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
     }
 }
 
@@ -17,6 +17,10 @@ repositories {
 }
 
 dependencies {
-    compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlinVersion"
+    compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
     testCompile "junit:junit:4.12"
+}
+
+sourceSets {
+    main.java.srcDirs += 'src/main/kotlin'
 }
