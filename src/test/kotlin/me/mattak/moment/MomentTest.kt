@@ -14,10 +14,15 @@ public class MomentTest {
         val defaultDate = Date()
         val defaultTimeZone = TimeZone.getDefault()
         val defaultLocale = Locale.getDefault()
-        val m = Moment()
-        assertTrue(m.date.after(defaultDate) || m.date.equals(defaultDate))
-        assertTrue(m.timeZone.equals(defaultTimeZone))
-        assertTrue(m.locale.equals(defaultLocale))
+        val m1 = Moment()
+        assertTrue(m1.date.after(defaultDate) || m1.date.equals(defaultDate))
+        assertTrue(m1.timeZone.equals(defaultTimeZone))
+        assertTrue(m1.locale.equals(defaultLocale))
+
+        val m2 = Moment(defaultDate, defaultTimeZone, defaultLocale)
+        assertTrue(m2.date.after(defaultDate) || m2.date.equals(defaultDate))
+        assertTrue(m2.timeZone.equals(defaultTimeZone))
+        assertTrue(m2.locale.equals(defaultLocale))
     }
 
     @Test
@@ -105,5 +110,21 @@ public class MomentTest {
         assertTrue(m2.compareTo(m2) == 0)
         assertTrue(m2.compareTo(m1) > 0)
         assertTrue(m1.compareTo(m2) < 0)
+    }
+
+    @Test
+    fun intervalSince() {
+        val calendar = Calendar.getInstance()
+        calendar.timeInMillis = 1442922588000
+        val date1 = calendar.time
+        calendar.timeInMillis = 1442922588001
+        val date2 = calendar.time
+
+        val m1 = Moment(date1)
+        val m2 = Moment(date2)
+
+        assertEquals(0, m1.intervalSince(m1).millisec)
+        assertEquals(1, m2.intervalSince(m1).millisec)
+        assertEquals(-1, m1.intervalSince(m2).millisec)
     }
 }
