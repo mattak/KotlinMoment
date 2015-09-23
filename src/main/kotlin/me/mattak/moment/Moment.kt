@@ -1,6 +1,5 @@
 package me.mattak.moment
 
-import me.mattak.moment
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -78,7 +77,7 @@ public class Moment(
     }
 
     fun add(value: Duration): Moment {
-        return add(value.millisec, TimeUnit.MILLISECONDS)
+        return add(value.interval, TimeUnit.MILLISECONDS)
     }
 
     fun subtract(value: Long, unit: TimeUnit): Moment {
@@ -86,7 +85,7 @@ public class Moment(
     }
 
     fun subtract(duration: Duration): Moment {
-        return add(-duration.millisec, TimeUnit.MILLISECONDS)
+        return add(-duration.interval, TimeUnit.MILLISECONDS)
     }
 
     fun isCloseTo(moment: Moment, precision: Long): Boolean {
@@ -175,13 +174,13 @@ public class Moment(
     private fun convertMillis(value: Long, unit: TimeUnit): Long {
         when (unit) {
             TimeUnit.MILLISECONDS -> return value
-            TimeUnit.SECONDS -> return value * 1000
-            TimeUnit.MINUTES -> return value * 60000
-            TimeUnit.HOURS -> return value * 3600000
-            TimeUnit.DAYS -> return value * 86400000
-            TimeUnit.MONTHS -> return value * 2592000000
-            TimeUnit.QUARTERS -> return value * 31536000000
-            TimeUnit.YEARS -> return value * 31536000000
+            TimeUnit.SECONDS -> return value * TimeUnit.SECONDS.durationMultiply
+            TimeUnit.MINUTES -> return value * TimeUnit.MINUTES.durationMultiply
+            TimeUnit.HOURS -> return value * TimeUnit.HOURS.durationMultiply
+            TimeUnit.DAYS -> return value * TimeUnit.DAYS.durationMultiply
+            TimeUnit.MONTHS -> return value * TimeUnit.MONTHS.durationMultiply
+            TimeUnit.QUARTERS -> return value * TimeUnit.QUARTERS.durationMultiply
+            TimeUnit.YEARS -> return value * TimeUnit.YEARS.durationMultiply
         }
     }
 }

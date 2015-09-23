@@ -123,8 +123,8 @@ public class MomentTest {
         val m1 = Moment(date1)
         val m2 = Moment(date2)
 
-        assertEquals(0, m1.intervalSince(m1).millisec)
-        assertEquals(1, m2.intervalSince(m1).millisec)
-        assertEquals(-1, m1.intervalSince(m2).millisec)
+        assertEquals(0, m1.intervalSince(m1).interval)
+        assertEquals(1, m2.intervalSince(m1).interval)
+        assertEquals(-1, m1.intervalSince(m2).interval)
     }
 }

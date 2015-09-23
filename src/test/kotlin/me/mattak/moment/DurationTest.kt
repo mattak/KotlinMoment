@@ -81,8 +81,8 @@ public class DurationTest {
         val d1 = Duration(1)
         val d2 = Duration(2)
         val d3 = Duration(-3)
-        assertEquals(3.toLong(), d1.add(d2).millisec)
-        assertEquals(-2.toLong(), d1.add(d3).millisec)
+        assertEquals(3.0, d1.add(d2).millisec)
+        assertEquals(-2.0, d1.add(d3).millisec)
     }
 
     @Test
@@ -90,8 +90,8 @@ public class DurationTest {
         val d1 = Duration(1)
         val d2 = Duration(2)
         val d3 = Duration(-3)
-        assertEquals(-1.toLong(), d1.subtract(d2).millisec)
-        assertEquals(4.toLong(), d1.subtract(d3).millisec)
+        assertEquals(-1.0, d1.subtract(d2).millisec)
+        assertEquals(4.0, d1.subtract(d3).millisec)
     }
 
     @Test
