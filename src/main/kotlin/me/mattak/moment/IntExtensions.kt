@@ -1,7 +1,7 @@
 package me.mattak.moment
 
 /**
- * Extensions.kt
+ * IntExtensions.kt
  * Created by mattak on 15/09/02.
  */
 
