@@ -73,7 +73,10 @@ public class DurationTest {
 
     @Test
     fun ago() {
-        // TODO: write
+        val now = Moment()
+        val duration = Duration(1000)
+        val past = duration.ago()
+        assertTrue(now.date.after(past.date))
     }
 
     @Test
@@ -128,7 +131,7 @@ public class DurationTest {
             hour: Int = 0,
             minute: Int = 0,
             second: Int = 0
-            ): Duration {
+    ): Duration {
         val calendar = Calendar.getInstance(TimeZone.getTimeZone("UTC"))
         calendar.set(year, month, day, hour, minute, second)
         return Duration(calendar.getTime().getTime())

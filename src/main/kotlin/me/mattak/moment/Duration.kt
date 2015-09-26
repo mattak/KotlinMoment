@@ -30,7 +30,7 @@ public class Duration(val interval: Long) : Comparable<Duration> {
         get() = interval.toDouble()
 
     fun ago(): Moment {
-        return moment().subtract(this)
+        return Moment().subtract(this)
     }
 
     fun add(duration: Duration): Duration {
