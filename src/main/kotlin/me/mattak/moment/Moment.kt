@@ -64,16 +64,47 @@ public class Moment(
         }
     }
 
-    fun format(dateFormat: String = "yyyy-MM-dd HH:mm:SS ZZZZ"): String {
+    fun format(dateFormat: String = "yyyy-MM-dd HH:mm:ss ZZZZ"): String {
         return getFormatString(dateFormat)
     }
 
     fun add(value: Long, unit: TimeUnit): Moment {
-        val millis = convertMillis(value, unit)
         val calendar = getCalendar()
-        calendar.timeInMillis = calendar.timeInMillis + millis
-        val newDate = calendar.time
-        return Moment(newDate)
+
+        when (unit) {
+            TimeUnit.MILLISECONDS -> {
+                calendar.timeInMillis = calendar.timeInMillis + value
+                return Moment(calendar.time, timeZone, locale)
+            }
+            TimeUnit.SECONDS -> {
+                calendar.add(Calendar.SECOND, value.toInt())
+                return Moment(calendar.time, timeZone, locale)
+            }
+            TimeUnit.MINUTES -> {
+                calendar.add(Calendar.MINUTE, value.toInt())
+                return Moment(calendar.time, timeZone, locale)
+            }
+            TimeUnit.HOURS -> {
+                calendar.add(Calendar.HOUR_OF_DAY, value.toInt())
+                return Moment(calendar.time, timeZone, locale)
+            }
+            TimeUnit.DAYS -> {
+                calendar.add(Calendar.DAY_OF_YEAR, value.toInt())
+                return Moment(calendar.time, timeZone, locale)
+            }
+            TimeUnit.MONTHS -> {
+                calendar.add(Calendar.MONTH, value.toInt())
+                return Moment(calendar.time, timeZone, locale)
+            }
+            TimeUnit.QUARTERS -> {
+                calendar.add(Calendar.MONTH, value.toInt() * 3)
+                return Moment(calendar.time, timeZone, locale)
+            }
+            TimeUnit.YEARS -> {
+                calendar.add(Calendar.YEAR, value.toInt())
+                return Moment(calendar.time, timeZone, locale)
+            }
+        }
     }
 
     fun add(value: Duration): Moment {
@@ -90,7 +121,7 @@ public class Moment(
 
     fun isCloseTo(moment: Moment, precision: Long): Boolean {
         val delta = intervalSince(moment)
-        return Math.abs(delta.millisec) < precision
+        return Math.abs(delta.millisec) <= precision
     }
 
     fun startOf(unit: TimeUnit): Moment {
@@ -100,30 +131,30 @@ public class Moment(
             return this
         }
         if (unit.order <= TimeUnit.YEARS.order) {
-            calendar.set(1, Calendar.MONTH)
+            calendar.set(Calendar.MONTH, 0)
         }
         if (unit.order <= TimeUnit.QUARTERS.order) {
             val month = calendar.get(Calendar.MONTH)
             val startMonth = (month / 3) * 3
-            calendar.set(startMonth, Calendar.MONTH)
+            calendar.set(Calendar.MONTH, startMonth)
         }
         if (unit.order <= TimeUnit.MONTHS.order) {
-            calendar.set(1, Calendar.DAY_OF_MONTH)
+            calendar.set(Calendar.DAY_OF_MONTH, 1)
         }
         if (unit.order <= TimeUnit.DAYS.order) {
-            calendar.set(0, Calendar.HOUR)
+            calendar.set(Calendar.HOUR_OF_DAY, 0)
         }
         if (unit.order <= TimeUnit.HOURS.order) {
-            calendar.set(0, Calendar.MINUTE)
+            calendar.set(Calendar.MINUTE, 0)
         }
         if (unit.order <= TimeUnit.MINUTES.order) {
-            calendar.set(0, Calendar.SECOND)
+            calendar.set(Calendar.SECOND, 0)
         }
         if (unit.order <= TimeUnit.SECONDS.order) {
-            calendar.set(0, Calendar.MILLISECOND)
+            calendar.set(Calendar.MILLISECOND, 0)
         }
 
-        return Moment(calendar.time)
+        return Moment(calendar.time, timeZone, locale)
     }
 
     fun endOf(unit: TimeUnit): Moment {
@@ -169,18 +200,5 @@ public class Moment(
 
     private fun getFormatString(dateFormat: String): String {
         return getDateFormat(dateFormat).format(date)
-    }
-
-    private fun convertMillis(value: Long, unit: TimeUnit): Long {
-        when (unit) {
-            TimeUnit.MILLISECONDS -> return value
-            TimeUnit.SECONDS -> return value * TimeUnit.SECONDS.durationMultiply
-            TimeUnit.MINUTES -> return value * TimeUnit.MINUTES.durationMultiply
-            TimeUnit.HOURS -> return value * TimeUnit.HOURS.durationMultiply
-            TimeUnit.DAYS -> return value * TimeUnit.DAYS.durationMultiply
-            TimeUnit.MONTHS -> return value * TimeUnit.MONTHS.durationMultiply
-            TimeUnit.QUARTERS -> return value * TimeUnit.QUARTERS.durationMultiply
-            TimeUnit.YEARS -> return value * TimeUnit.YEARS.durationMultiply
-        }
     }
 }
