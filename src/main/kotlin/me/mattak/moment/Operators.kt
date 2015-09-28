@@ -8,12 +8,12 @@ fun Moment.plus(rhs: Duration): Moment {
     return this.add(rhs)
 }
 
-fun Duration.plus(rhs: Moment): Moment {
-    return rhs.add(this)
-}
-
 fun Moment.minus(rhs: Duration): Moment {
     return this.subtract(rhs)
+}
+
+fun Duration.plus(rhs: Moment): Moment {
+    return rhs.add(this)
 }
 
 fun Duration.minus(rhs: Moment): Moment {
@@ -21,9 +21,9 @@ fun Duration.minus(rhs: Moment): Moment {
 }
 
 fun Duration.plus(rhs: Duration): Duration {
-    return rhs.add(this)
+    return this.add(rhs)
 }
 
 fun Duration.minus(rhs: Duration): Duration {
-    return rhs.subtract(this)
+    return this.subtract(rhs)
 }
