@@ -11,21 +11,7 @@ import java.util.*
  */
 fun utc(): Moment {
     val zone = TimeZone.getTimeZone("UTC")
-    return moment(zone)
-}
-
-/**
- * Create Moment from current time.
- *
- * @param timeZone The timeZone to parse.
- * @param locale The locale to parse.
- * @return Moment of current time.
- */
-fun moment(
-        timeZone: TimeZone = TimeZone.getDefault(),
-        locale: Locale = Locale.getDefault()
-): Moment {
-    return Moment(timeZone = timeZone, locale = locale)
+    return Moment(timeZone = zone)
 }
 
 /**
@@ -43,17 +29,19 @@ fun moment(
 ): Moment? {
 
     val formats: Array<SimpleDateFormat> = arrayOf(
-            SimpleDateFormat("yyyy-MM-ddTHH:mm:ssZ", locale),
+            SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssZ", locale),
             SimpleDateFormat("yyyy-MM-dd HH:mm:ssZ", locale),
-            SimpleDateFormat("yyyy-MM-ddTHH:mm:ss.SSSZ", locale),
+            SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ", locale),
             SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSSZ", locale),
+            SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss", locale),
+            SimpleDateFormat("yyyy-MM-dd HH:mm:ss", locale),
             SimpleDateFormat("yyyy-MM-dd", locale),
-            SimpleDateFormat("h:mm:ss A", locale),
-            SimpleDateFormat("h:mm A", locale),
+            SimpleDateFormat("h:mm:ss a", locale),
+            SimpleDateFormat("h:mm a", locale),
             SimpleDateFormat("MM/dd/yyyy", locale),
             SimpleDateFormat("MMMM d, yyyy", locale),
-            SimpleDateFormat("MMMM d, yyyy LT", locale),
-            SimpleDateFormat("dddd, MMMM D, yyyy LT", locale),
+            // SimpleDateFormat("MMMM d, yyyy LT", locale),
+            // SimpleDateFormat("dddd, MMMM D, yyyy LT", locale),
             SimpleDateFormat("yyyyyy-MM-dd", locale),
             SimpleDateFormat("yyyy-MM-dd", locale),
             SimpleDateFormat("GGGG-[W]WW-E", locale),
