@@ -1,0 +1,69 @@
+boolean validProperty(propertyName) {
+    try { project.property(propertyName) != null }
+    catch (MissingPropertyException) { false }
+}
+
+assert validProperty('signing.keyId'),             'properties for signing must be provided'
+assert validProperty('signing.secretKeyRingFile'), 'properties for signing must be provided'
+assert validProperty('signing.password'),          'properties for signing must be provided'
+assert validProperty('ossrhUsername'),             'properties for ossrh must be provided'
+assert validProperty('ossrhPassword'),             'properties for ossrh must be provided'
+assert validProperty('isReleaseVersion'),  'missing settigs'
+assert (archiveName != null),         'missing settigs'
+assert (projectDescription != null),  'missing settigs'
+assert (siteUrl != null),             'missing settigs'
+assert (siteUrl != null),             'missing settigs'
+assert (siteUrl != null),             'missing settigs'
+assert (scmUrl != null),              'missing settigs'
+assert (licenseName != null),         'missing settigs'
+assert (licenseUrl != null),          'missing settigs'
+assert (userId != null),              'missing settigs'
+assert (userName != null),            'missing settigs'
+
+signing {
+    // required { gradle.taskGraph.hasTask('uploadArchives') }
+    sign configurations.archives
+}
+
+uploadArchives {
+    repositories.mavenDeployer {
+        beforeDeployment { MavenDeployment deployment -> signing.signPom(deployment) }
+
+        def sonatypeRepo = isReleaseVersion ?
+            'https://oss.sonatype.org/service/local/staging/deploy/maven2/' :
+            'https://oss.sonatype.org/content/repositories/snapshots/'
+
+        repository(url: sonatypeRepo) {
+            authentication(userName: ossrhUsername, password: ossrhPassword)
+        }
+
+        pom.artifactId = archiveName
+        pom.project {
+            name projectName
+            packaging 'aar'
+            description projectDescription
+            url siteUrl
+
+            scm {
+                url scmUrl
+                connection scmUrl
+                developerConnection scmUrl
+            }
+
+            licenses {
+                license {
+                    name licenseName
+                    url  licenseUrl
+                    distribution 'repo'
+                }
+            }
+
+            developers {
+                developer {
+                    id    userId
+                    name  userName
+                }
+            }
+        }
+    }
+}

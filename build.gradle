@@ -12,6 +12,28 @@ buildscript {
 
 apply plugin: 'kotlin'
 apply plugin: 'jacoco'
+apply plugin: 'maven'
+apply plugin: 'signing'
+
+group            = 'me.mattak'
+version          = '0.0.1'
+archivesBaseName = 'moment'
+
+ext {
+    archiveName  = 'moment'
+    userId       = 'mattak'
+    userName     = 'Takuma Maruyama'
+    userEmail    = 'mattak.me@gmail.com'
+    gitUrl       = 'https://github.com/mattak/KotlinMoment.git'
+    siteUrl      = 'https://github.com/mattak/KotlinMoment'
+    issueUrl     = 'https://github.com/mattak/KotlinMoment/issues'
+    projectName  = 'KotlinMoment'
+    projectDescription = 'SwiftMoment for kotlin'
+    scmUrl       = 'scm:git@github.com:mattak/KotlinMoment.git'
+    licenseName  = 'The Apache License, Version 2.0'
+    licenseUrl   = 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+    isReleaseVersion = !version.endsWith('SNAPSHOT')
+}
 
 repositories {
     mavenCentral()
@@ -37,4 +59,32 @@ jacocoTestReport {
         csv.enabled false
         html.destination "${buildDir}/jacocoHtml"
     }
+}
+
+task sourcesJar(type: Jar) {
+    from sourceSets.main.java.srcDirs
+    classifier = 'sources'
+}
+
+// task javadoc(type: Javadoc) {
+//     source = sourceSets.main.java.srcDirs
+//     classpath += project.files(android.getBootClasspath().join(File.pathSeparator))
+// }
+
+task javadocJar(type: Jar, dependsOn: javadoc) {
+    classifier = 'javadoc'
+    from javadoc.destinationDir
+}
+
+artifacts {
+    archives javadocJar
+    archives sourcesJar
+}
+
+task findConvensions << {
+    println project.getConvention()
+}
+
+if (gradle.startParameter.taskNames.contains('uploadArchives')) {
+    apply from: 'publish_maven.gradle'
 }
