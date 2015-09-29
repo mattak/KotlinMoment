@@ -36,21 +36,20 @@ fun moment(
             SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss", locale),
             SimpleDateFormat("yyyy-MM-dd HH:mm:ss", locale),
             SimpleDateFormat("yyyy-MM-dd", locale),
-            SimpleDateFormat("h:mm:ss a", locale),
-            SimpleDateFormat("h:mm a", locale),
-            SimpleDateFormat("MM/dd/yyyy", locale),
-            SimpleDateFormat("MMMM d, yyyy", locale),
-            // SimpleDateFormat("MMMM d, yyyy LT", locale),
-            // SimpleDateFormat("dddd, MMMM D, yyyy LT", locale),
-            SimpleDateFormat("yyyyyy-MM-dd", locale),
-            SimpleDateFormat("yyyy-MM-dd", locale),
-            SimpleDateFormat("GGGG-[W]WW-E", locale),
-            SimpleDateFormat("GGGG-[W]WW", locale),
-            SimpleDateFormat("yyyy-ddd", locale),
-            SimpleDateFormat("HH:mm:ss.SSSS", locale),
-            SimpleDateFormat("HH:mm:ss", locale),
-            SimpleDateFormat("HH:mm", locale),
-            SimpleDateFormat("HH", locale)
+            SimpleDateFormat("K:mm:ss a", locale), // 1:24:35 PM
+            SimpleDateFormat("K:mm a", locale), // 1:24 AM
+            SimpleDateFormat("MM/dd/yyyy", locale), // 02/29/2015
+            SimpleDateFormat("MMMM d, yyyy h:mm a", locale), // June 1, 2015 1:23 PM
+            SimpleDateFormat("MMMM d, yyyy", locale), // June 1, 2014
+            // SimpleDateFormat("dddd, MMMM D, yyyy h:mm a", locale),
+            SimpleDateFormat("yyyyyy-MM-dd", locale), // 002015-01-01
+            SimpleDateFormat("yyyy-'W'ww-E", locale), // 2015-W14-Tue
+            SimpleDateFormat("yyyy-'W'ww", locale), // 2015-W14
+            SimpleDateFormat("yyyy-DDD", locale), // 2015-365
+            SimpleDateFormat("HH:mm:ss.SSS", locale), // 12:08:12.9999
+            SimpleDateFormat("HH:mm:ss", locale), // 12:08:12
+            SimpleDateFormat("HH:mm", locale), // 12:09
+            SimpleDateFormat("HH", locale) // 12
     )
 
     formats.forEach { format ->
@@ -107,23 +106,22 @@ fun moment(
     if (params.size() > 0) {
         val calendar = Calendar.getInstance(timeZone, locale)
 
-        if (params.size() > 0) {
-            calendar.set(params[0], Calendar.YEAR)
-        }
+        calendar.set(Calendar.YEAR, params.get(0))
+
         if (params.size() > 1) {
-            calendar.set(params[1] - 1, Calendar.MONTH)
+            calendar.set(Calendar.MONTH, params.get(1) - 1)
         }
         if (params.size() > 2) {
-            calendar.set(params[2], Calendar.DAY_OF_MONTH)
+            calendar.set(Calendar.DAY_OF_MONTH, params.get(2))
         }
         if (params.size() > 3) {
-            calendar.set(params[3], Calendar.HOUR_OF_DAY)
+            calendar.set(Calendar.HOUR_OF_DAY, params.get(3))
         }
         if (params.size() > 4) {
-            calendar.set(params[4], Calendar.MINUTE)
+            calendar.set(Calendar.MINUTE, params.get(4))
         }
         if (params.size() > 5) {
-            calendar.set(params[5], Calendar.SECOND)
+            calendar.set(Calendar.SECOND, params.get(5))
         }
 
         return Moment(calendar.time, timeZone, locale)
@@ -153,22 +151,22 @@ fun moment(
         val calendar = Calendar.getInstance(timeZone, locale)
 
         dictionary.get("year")?.let {
-            calendar.set(it, Calendar.YEAR)
+            calendar.set(Calendar.YEAR, it)
         }
         dictionary.get("month")?.let {
-            calendar.set(it - 1, Calendar.MONTH)
+            calendar.set(Calendar.MONTH, it - 1)
         }
         dictionary.get("day")?.let {
-            calendar.set(it, Calendar.DAY_OF_MONTH)
+            calendar.set(Calendar.DAY_OF_MONTH, it)
         }
         dictionary.get("hour")?.let {
-            calendar.set(it, Calendar.HOUR)
+            calendar.set(Calendar.HOUR, it)
         }
         dictionary.get("minute")?.let {
-            calendar.set(it, Calendar.MINUTE)
+            calendar.set(Calendar.MINUTE, it)
         }
         dictionary.get("second")?.let {
-            calendar.set(it, Calendar.SECOND)
+            calendar.set(Calendar.SECOND, it)
         }
 
         return Moment(calendar.time, timeZone, locale)
@@ -188,7 +186,7 @@ fun moment(
         milliseconds: Long,
         timeZone: TimeZone = TimeZone.getDefault(),
         locale: Locale = Locale.getDefault()
-): Moment? {
+): Moment {
     val calendar = Calendar.getInstance(timeZone, locale)
     calendar.timeInMillis = milliseconds
 
