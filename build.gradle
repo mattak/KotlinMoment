@@ -55,9 +55,7 @@ jacoco {
 
 jacocoTestReport {
     reports {
-        xml.enabled false
-        csv.enabled false
-        html.destination "${buildDir}/jacocoHtml"
+        xml.enabled true
     }
 }
 
@@ -88,3 +86,5 @@ task findConvensions << {
 if (gradle.startParameter.taskNames.contains('uploadArchives')) {
     apply from: 'publish_maven.gradle'
 }
+
+check.dependsOn jacocoTestReport
