@@ -88,3 +88,5 @@ task findConvensions << {
 if (gradle.startParameter.taskNames.contains('uploadArchives')) {
     apply from: 'publish_maven.gradle'
 }
+
+check.dependsOn jacocoTestReport
