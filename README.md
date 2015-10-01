@@ -1,4 +1,4 @@
-# KotlinMoment [![Maven Central](https://maven-badges.herokuapp.com/maven-central/me.mattak/moment/badge.svg)](https://maven-badges.herokuapp.com/maven-central/me.mattak/moment) [![codecov.io](http://codecov.io/github/mattak/KotlinMoment/coverage.svg?branch=master)](http://codecov.io/github/mattak/KotlinMoment?branch=master)
+# KotlinMoment [![Maven Central](https://maven-badges.herokuapp.com/maven-central/me.mattak/moment/badge.svg)](https://maven-badges.herokuapp.com/maven-central/me.mattak/moment) [![Build Status](https://travis-ci.org/mattak/KotlinMoment.svg?branch=master)](https://travis-ci.org/mattak/KotlinMoment) [![codecov.io](http://codecov.io/github/mattak/KotlinMoment/coverage.svg?branch=master)](http://codecov.io/github/mattak/KotlinMoment?branch=master)
 
 SwiftMoment for kotlin.
 
