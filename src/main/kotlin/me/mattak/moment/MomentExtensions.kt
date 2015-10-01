@@ -160,7 +160,7 @@ fun moment(
             calendar.set(Calendar.DAY_OF_MONTH, it)
         }
         dictionary.get("hour")?.let {
-            calendar.set(Calendar.HOUR, it)
+            calendar.set(Calendar.HOUR_OF_DAY, it)
         }
         dictionary.get("minute")?.let {
             calendar.set(Calendar.MINUTE, it)
