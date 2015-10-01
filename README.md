@@ -1,6 +1,4 @@
-# KotlinMoment
-
-[![Maven Central](https://maven-badges.herokuapp.com/maven-central/me.mattak/moment/badge.svg)](https://maven-badges.herokuapp.com/maven-central/me.mattak/moment)
+# KotlinMoment [![Maven Central](https://maven-badges.herokuapp.com/maven-central/me.mattak/moment/badge.svg)](https://maven-badges.herokuapp.com/maven-central/me.mattak/moment) [![codecov.io](http://codecov.io/github/mattak/KotlinMoment/coverage.svg?branch=master)](http://codecov.io/github/mattak/KotlinMoment?branch=master)
 
 SwiftMoment for kotlin.
 
