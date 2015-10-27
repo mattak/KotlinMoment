@@ -1,29 +1,29 @@
 package me.mattak.moment
 
-fun Moment.minus(rhs: Moment): Duration {
+operator fun Moment.minus(rhs: Moment): Duration {
     return this.intervalSince(rhs)
 }
 
-fun Moment.plus(rhs: Duration): Moment {
+operator fun Moment.plus(rhs: Duration): Moment {
     return this.add(rhs)
 }
 
-fun Moment.minus(rhs: Duration): Moment {
+operator fun Moment.minus(rhs: Duration): Moment {
     return this.subtract(rhs)
 }
 
-fun Duration.plus(rhs: Moment): Moment {
+operator fun Duration.plus(rhs: Moment): Moment {
     return rhs.add(this)
 }
 
-fun Duration.minus(rhs: Moment): Moment {
+operator fun Duration.minus(rhs: Moment): Moment {
     return rhs.subtract(this)
 }
 
-fun Duration.plus(rhs: Duration): Duration {
+operator fun Duration.plus(rhs: Duration): Duration {
     return this.add(rhs)
 }
 
-fun Duration.minus(rhs: Duration): Duration {
+operator fun Duration.minus(rhs: Duration): Duration {
     return this.subtract(rhs)
 }
