@@ -103,24 +103,24 @@ fun moment(
         timeZone: TimeZone = TimeZone.getDefault(),
         locale: Locale = Locale.getDefault()
 ): Moment? {
-    if (params.size() > 0) {
+    if (params.size > 0) {
         val calendar = Calendar.getInstance(timeZone, locale)
 
         calendar.set(Calendar.YEAR, params.get(0))
 
-        if (params.size() > 1) {
+        if (params.size > 1) {
             calendar.set(Calendar.MONTH, params.get(1) - 1)
         }
-        if (params.size() > 2) {
+        if (params.size > 2) {
             calendar.set(Calendar.DAY_OF_MONTH, params.get(2))
         }
-        if (params.size() > 3) {
+        if (params.size > 3) {
             calendar.set(Calendar.HOUR_OF_DAY, params.get(3))
         }
-        if (params.size() > 4) {
+        if (params.size > 4) {
             calendar.set(Calendar.MINUTE, params.get(4))
         }
-        if (params.size() > 5) {
+        if (params.size > 5) {
             calendar.set(Calendar.SECOND, params.get(5))
         }
 
@@ -147,7 +147,7 @@ fun moment(
         timeZone: TimeZone = TimeZone.getDefault(),
         locale: Locale = Locale.getDefault()
 ): Moment? {
-    if (dictionary.size() > 0) {
+    if (dictionary.size > 0) {
         val calendar = Calendar.getInstance(timeZone, locale)
 
         dictionary.get("year")?.let {
