@@ -7,7 +7,7 @@ SwiftMoment for kotlin.
 Add your dependencies.
 
 ```
-compile 'me.mattak:moment:0.0.2'
+compile 'me.mattak:moment:0.0.3'
 ```
 
 ## License
