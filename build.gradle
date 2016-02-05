@@ -1,5 +1,5 @@
 buildscript {
-    ext.kotlin_version = '1.0.0-beta-3595'
+    ext.kotlin_version = '1.0.0-rc-1036'
 
     repositories {
         mavenCentral()
@@ -16,7 +16,7 @@ apply plugin: 'maven'
 apply plugin: 'signing'
 
 group            = 'me.mattak'
-version          = '0.0.2'
+version          = '0.0.3'
 archivesBaseName = 'moment'
 
 ext {
@@ -42,6 +42,7 @@ repositories {
 dependencies {
     compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
     testCompile "junit:junit:4.12"
+    testCompile "org.jetbrains.kotlin:kotlin-test:$kotlin_version"
 }
 
 sourceSets {
