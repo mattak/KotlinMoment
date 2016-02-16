@@ -16,7 +16,7 @@ apply plugin: 'maven'
 apply plugin: 'signing'
 
 group            = 'me.mattak'
-version          = '0.0.3'
+version          = '0.0.4'
 archivesBaseName = 'moment'
 
 ext {
