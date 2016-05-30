@@ -216,22 +216,6 @@ public class DurationTest {
     }
 
     @Test
-    fun toNSDateFormatString() {
-        assertEquals("0", Duration(0).toNSDateFormatString())
-        assertEquals("1", Duration(1000).toNSDateFormatString())
-        assertEquals("59", Duration(59000).toNSDateFormatString())
-        assertEquals("1:00", Duration(60000).toNSDateFormatString())
-        assertEquals("59:59",   Duration(3599000).toNSDateFormatString())
-        assertEquals("1:00:00", Duration(3600000).toNSDateFormatString())
-        assertEquals("23:59:59", Duration(86399999).toNSDateFormatString())
-        assertEquals("1d 00:00:00", Duration(86400000).toNSDateFormatString())
-        assertEquals("29d 23:59:59", Duration(2591999999).toNSDateFormatString())
-        assertEquals("1m 0d 00:00:00", Duration(2678400000).toNSDateFormatString())
-        assertEquals("11m 30d 23:59:59", Duration(31535999999).toNSDateFormatString())
-        assertEquals("1y 0m 0d 00:00:00", Duration(31536000000).toNSDateFormatString())
-    }
-
-    @Test
     fun compareTo() {
         val d1 = Duration(1)
         val d2 = Duration(-100)
