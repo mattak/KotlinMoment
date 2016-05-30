@@ -109,25 +109,6 @@ public class Duration(val interval: Long) : Comparable<Duration> {
         return interval.toString()
     }
 
-    private fun getDateFormatNumber(
-            dateFormat: String,
-            date: Date,
-            locale: Locale = Locale.getDefault(),
-            timeZone: TimeZone = TimeZone.getDefault()
-    ): Int {
-        return getSimpleDateFormat(dateFormat, locale, timeZone).format(date).toInt()
-    }
-
-    private fun getSimpleDateFormat(
-            dateFormat: String,
-            locale: Locale = Locale.getDefault(),
-            timeZone: TimeZone = TimeZone.getDefault()
-    ): SimpleDateFormat {
-        val format = SimpleDateFormat(dateFormat, locale)
-        format.timeZone = timeZone
-        return format
-    }
-
     override fun compareTo(other: Duration): Int {
         if (this.interval > other.interval) {
             return 1
