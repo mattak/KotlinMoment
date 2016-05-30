@@ -109,42 +109,6 @@ public class Duration(val interval: Long) : Comparable<Duration> {
         return interval.toString()
     }
 
-    /**
-     * Create formatted string which follows NSDateComponentsFormatter.
-     * Format string starts from UTC 1970/01/01 00:00:00.
-     * example: "1y 2m 3d 23:59:59".
-     *
-     * @return The NSDateComponentsFormatter
-     */
-    fun toNSDateFormatString(): String {
-        val date = Date(interval)
-        val locale = Locale.getDefault()
-        val timeZone = TimeZone.getTimeZone("UTC")
-
-        if (yearsFloor > 0) {
-            val year = getDateFormatNumber("yyyy", date, locale, timeZone) - 1970
-            val month = getDateFormatNumber("M", date, locale, timeZone) - 1
-            val day = getDateFormatNumber("d", date, locale, timeZone) - 1
-            val withoutDayString = getSimpleDateFormat("HH:mm:ss", locale, timeZone).format(date)
-            return java.lang.String.format("%dy %dm %dd %s", year, month, day, withoutDayString)
-        } else if (monthsFloor > 0) {
-            val month = getDateFormatNumber("M", date, locale, timeZone) - 1
-            val day = getDateFormatNumber("d", date, locale, timeZone) - 1
-            val withoutDayString = getSimpleDateFormat("HH:mm:ss", locale, timeZone).format(date)
-            return java.lang.String.format("%dm %dd %s", month, day, withoutDayString)
-        } else if (daysFloor > 0) {
-            val day = getDateFormatNumber("d", date, locale, timeZone) - 1
-            val withoutDayString = getSimpleDateFormat("HH:mm:ss", locale, timeZone).format(date)
-            return java.lang.String.format("%dd %s", day, withoutDayString)
-        } else if (hoursFloor > 0) {
-            return getSimpleDateFormat("H:mm:ss", locale, timeZone).format(date)
-        } else if (minutesFloor > 0) {
-            return getSimpleDateFormat("m:ss", locale, timeZone).format(date)
-        } else {
-            return getSimpleDateFormat("s", locale, timeZone).format(date)
-        }
-    }
-
     private fun getDateFormatNumber(
             dateFormat: String,
             date: Date,
