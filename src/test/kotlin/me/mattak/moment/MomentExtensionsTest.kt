@@ -3,6 +3,7 @@ package me.mattak.moment
 import org.junit.Test
 import java.util.*
 import kotlin.test.assertEquals
+import kotlin.test.assertNull
 
 /**
  * Moment Extensions Test
@@ -82,12 +83,17 @@ public class MomentExtensionsTest {
 
         val m23 = moment("23", locale = Locale.ENGLISH)!!
         assertEquals("23", m23.format("HH"))
+
+        val m24 = moment("ABCDEFG", locale = Locale.ENGLISH)
+        assertNull(m24)
     }
 
     @Test
     fun moment_stringDate_dateFormat() {
         val moment = moment("2015", "yyyy")!!
         assertEquals(2015, moment.year)
+
+        assertNull(moment("ABCDEFG", "HH"))
     }
 
     @Test
@@ -99,6 +105,8 @@ public class MomentExtensionsTest {
         assertEquals(12, moment.hour)
         assertEquals(34, moment.minute)
         assertEquals(56, moment.second)
+
+        assertNull(moment(intArrayOf()))
     }
 
     @Test
@@ -117,6 +125,8 @@ public class MomentExtensionsTest {
         assertEquals(12, moment.hour)
         assertEquals(34, moment.minute)
         assertEquals(56, moment.second)
+
+        assertNull(moment(mapOf()))
     }
 
     @Test
