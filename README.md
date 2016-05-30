@@ -10,6 +10,13 @@ Add your dependencies.
 compile 'me.mattak:moment:0.0.4'
 ```
 
+## Usage
+
+You can refer great article in japanese :smile:
+
+- [KotlinMomentを使ってkotlinで日付を楽して扱う](http://qiita.com/kazuman519/items/5ff096a3b2cd7fafd483)
+- Thanks @kazuman519 !
+
 ## License
 
 ```
