@@ -1,8 +1,5 @@
 package me.mattak.moment
 
-import java.text.SimpleDateFormat
-import java.util.*
-
 /**
  * Duration class is interval of milliseconds. The precision is very rough. (especially month and years)
  * Created by mattak on 15/09/02.
